@@ -124,24 +124,24 @@ class _AddTodoState extends State<AddTodo> {
                   }
                 },
               ),
-              SizedBox(height: 15),
-              InkWell(
-                child: SignInButtonMethod("drop table"),
-                onTap: () {
-                  SqfLite sqflite = SqfLite();
-                  sqflite.DropTableAndCreateNewOne();
-                },
-              ),
-              SizedBox(height: 15),
-              InkWell(
-                child: SignInButtonMethod("Select"),
-                onTap: () async {
-                  SqfLite sqflite = SqfLite();
-                  List<Map> response =
-                      await sqflite.readData("SELECT * FROM 'todos'");
-                  print(response);
-                },
-              ),
+              // SizedBox(height: 15),
+              // InkWell(
+              //   child: SignInButtonMethod("drop table"),
+              //   onTap: () {
+              //     SqfLite sqflite = SqfLite();
+              //     sqflite.DropTableAndCreateNewOne();
+              //   },
+              // ),
+              // SizedBox(height: 15),
+              // InkWell(
+              //   child: SignInButtonMethod("Select"),
+              //   onTap: () async {
+              //     SqfLite sqflite = SqfLite();
+              //     List<Map> response =
+              //         await sqflite.readData("SELECT * FROM 'todos'");
+              //     print(response);
+              //   },
+              // ),
             ],
           ),
         ),

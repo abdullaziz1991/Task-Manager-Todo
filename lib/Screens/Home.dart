@@ -29,12 +29,7 @@ class _HomeState extends State<Home> {
   void _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
-      if (_selectedScreenIndex == 0) {
-        // Navigator.pushReplacement(
-        //   context,
-        //   CupertinoPageRoute(builder: (context) => MyApp()),
-        // );
-      }
+      if (_selectedScreenIndex == 0) {}
     });
   }
 
@@ -48,31 +43,14 @@ class _HomeState extends State<Home> {
         TodosId: '',
         SqlLiteId: '',
         AllTodos: []));
-    //  InterestsList = MyData.InterestsList.map(int.parse).toList()..sort();
-    // BlocProvider.of<ShoppingBloc>(context).add(AllProductEvent(
-    //     Username: MyData.Username,
-    //     SearchText: '',
-    //     SearchType: 1,
-    //     InterestsList: InterestsList));
     super.initState();
   }
-
-  // @override
-  // void didChangeDependencies() async {
-  //   //  MyData = widget.MyData;
-
-  //   //MyData.InterestsList
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     List<Map<String, Object>> _screens = [
       {'Screen': BasicPage(MyData: MyData), 'Title': "Basic Page"},
-      {'Screen': BasicPage(MyData: MyData), 'Title': "Basic Page"},
-
-      //{'Screen': Sales(MyData: MyData), 'Title': "Sales".tr()},
       {'Screen': UserProfile(MyData: MyData), 'Title': "Profile"},
     ];
 
@@ -92,10 +70,6 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             label: "Basic Page",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cabin),
-            label: "Sales",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.manage_accounts),
