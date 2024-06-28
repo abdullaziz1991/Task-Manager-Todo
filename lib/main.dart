@@ -11,14 +11,12 @@ import 'package:task_manager/bloc/task_manager_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
   await SqfLite().intialDb();
-  // SqfLite sqflite = SqfLite();
-  // sqflite.DropTableAndCreateNewOne();
-  // FlutterNativeSplash.remove();
+  FlutterNativeSplash.remove();
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => TaskManagerBloc()),
   ], child: MyApp()));
