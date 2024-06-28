@@ -41,11 +41,11 @@ class UserModle {
 class TodoModle {
   final String Todo_Id;
   final String Id_In_SqlLite;
-  final String Todo_Text;
+  String Todo_Text;
   String Todo_Completed;
-  final String Todo_Priority;
-  final String Todo_Date;
-  final String Todo_Time;
+  String Todo_Priority;
+  String Todo_Date;
+  String Todo_Time;
   //final String Todo_UserId;
 
   TodoModle({

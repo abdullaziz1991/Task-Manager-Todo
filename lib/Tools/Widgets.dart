@@ -180,7 +180,6 @@ Container TextFormFieldMethod(
     String validator2,
     IconData icon,
     String label,
-    // bool isDark,
     TextInputType textInputType,
     int MaxLenght,
     int MinLenght,
@@ -198,15 +197,14 @@ Container TextFormFieldMethod(
           return validator2;
         }
 
-        if (label == "Email" && (val == null || val.isEmpty)) {
-          return 'Please enter your email';
-        }
-        // Simple regex for email validation
-        final RegExp emailRegex = RegExp(
-          r'^[^@]+@[^@]+\.[^@]+',
-        );
-        if (!emailRegex.hasMatch(val)) {
-          return 'Please enter a valid email address';
+        if (label == "Email" && (val != null || val.isEmpty)) {
+          // Simple regex for email validation
+          final RegExp emailRegex = RegExp(
+            r'^[^@]+@[^@]+\.[^@]+',
+          );
+          if (!emailRegex.hasMatch(val)) {
+            return 'Please enter a valid email address';
+          }
         }
 
         return null;

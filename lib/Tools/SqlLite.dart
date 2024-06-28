@@ -31,8 +31,10 @@ class SqfLite {
     "id_In_Server" TEXT NOT NULL,
     "todo" TEXT NOT NULL,
     "completed" TEXT NOT NULL,
+    "Todo_Priority" TEXT NOT NULL,
     "Todo_Date" TEXT NOT NULL,
     "Todo_Time" TEXT NOT NULL
+
     )''');
     print(" onCreate =====================================");
   }
@@ -96,6 +98,7 @@ class SqfLite {
     "id_In_Server" TEXT NOT NULL,
     "todo" TEXT NOT NULL,
     "completed" TEXT NOT NULL,
+    "Todo_Priority" TEXT NOT NULL,
     "Todo_Date" TEXT NOT NULL,
     "Todo_Time" TEXT NOT NULL
     )''');

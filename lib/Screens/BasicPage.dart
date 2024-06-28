@@ -84,7 +84,7 @@ class _BasicPageState extends State<BasicPage> {
                                                 .AllTodos[index]
                                                 .Todo_Completed),
                                             onChanged: (ValueKey) {
-                                              print(ValueKey);
+                                              print(ValueKey.toString());
 
                                               context
                                                   .read<TaskManagerBloc>()

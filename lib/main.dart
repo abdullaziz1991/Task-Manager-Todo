@@ -16,6 +16,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs().init();
   await SqfLite().intialDb();
+  // SqfLite sqflite = SqfLite();
+  // sqflite.DropTableAndCreateNewOne();
   // FlutterNativeSplash.remove();
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => TaskManagerBloc()),

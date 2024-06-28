@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:task_manager/Screens/Home.dart';
 
 import 'package:task_manager/Tools/Dropdown_Buttons.dart';
 import 'package:task_manager/Tools/HomeAppBar.dart';
@@ -36,7 +37,6 @@ class _UpdateTodoState extends State<UpdateTodo> {
   var Date = "Please Set The Date", TheTime = "Please Set The Time";
   bool isDateSet = false, isTimeSet = false;
   late int PriorityNumber;
-  int _currentValue = 3;
   void _updateValue(DropdownButtonModle NewDropdownValue) {
     setState(() {
       if (NewDropdownValue.Sign == 'Priority') {
@@ -107,13 +107,23 @@ class _UpdateTodoState extends State<UpdateTodo> {
               // TimePickerMethod(),
               TimePickerMethod(width, context),
               SizedBox(height: 15),
+              DropdownButtons(
+                Sign: 'Completed',
+                initialValue: Completed,
+                list: TodoStateList,
+                icon: Icons.add_circle,
+                NewDropdownValue: _updateValue,
+              ),
+              SizedBox(height: 15),
               InkWell(
-                child: SignInButtonMethod("Add"),
+                child: SignInButtonMethod("Update"),
                 onTap: () {
                   if (TodoController.text != "" &&
                       Date != "" &&
                       TheTime != "") {
-                    context.read<TaskManagerBloc>().add(AddTodosEvent(
+                    String isCompleted =
+                        Completed == "Completed" ? "true" : "false";
+                    context.read<TaskManagerBloc>().add(UpdateTodosEvent(
                         UserId: widget.MyData.Id,
                         Todo: TodoController.text.toString(),
                         Priority: Priority,
@@ -121,9 +131,11 @@ class _UpdateTodoState extends State<UpdateTodo> {
                         AllTodos: AllTodos,
                         Todo_Date: Date,
                         Todo_Time: TheTime,
-                        Completed: Completed));
-                    showLoading(context, "Add Todo",
-                        "The Todo has been added successfully");
+                        Completed: isCompleted,
+                        TodosId: Todos.Todo_Id,
+                        SqlLiteId: Todos.Id_In_SqlLite));
+                    showLoading(context, "Update Todo",
+                        "The Todo has been Updated successfully");
                   } else {
                     SnackBarMethod(
                         context, "You Forgot To Fill In One Of The Fields");
@@ -131,13 +143,6 @@ class _UpdateTodoState extends State<UpdateTodo> {
                 },
               ),
               SizedBox(height: 15),
-              InkWell(
-                child: SignInButtonMethod("drop table"),
-                onTap: () {
-                  SqfLite sqflite = SqfLite();
-                  sqflite.DropTableAndCreateNewOne();
-                },
-              ),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/Screens/Home.dart';
 import 'package:task_manager/Tools/Model.dart';
 import 'package:task_manager/Tools/SqlLite.dart';
 import 'package:task_manager/Tools/Values.dart';
@@ -28,7 +29,6 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
         'password': event.Password,
         'expiresInMins': 30, // optional, defao 60
       });
-
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -68,60 +68,38 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
       Uri url = Uri.parse(ServerGetTodosUser + event.UserId);
       List<TodoModle> AllTodos = event.AllTodos;
       SqfLite sqflite = SqfLite();
-      bool TheItemIsExcited = false;
       List<Map> AllSqlData = [];
-      late int insertNewTodo;
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        print(data);
+        //  print(data);
         for (var element in data["todos"]) {
           AllSqlData = await sqflite.readData("SELECT * FROM 'todos'");
-          print(AllSqlData);
-          //  print(AllSqlData.length);
-          // AllSqlData.firstWhere((item) {
-          //   item["id_In_Server"]=element['id'].toString()?"":"";
-          //   return
-          // });
-          //print(element['id'].toString());
-          //  print(AllSqlData[0]["id_In_Server"]);
           if (AllSqlData.length != 0) {
-            for (var item in AllSqlData) {
-              //  for (int i = 0; i < AllSqlData.length; ) {
-              print(item["id_In_Server"]);
-              // AllSqlData.firstWhere((element) {
-              if (item["id_In_Server"] == element['id'].toString()) {
-                TheItemIsExcited = true;
-              }
-
-              //   return false;
-              //  });
-              // if (AllSqlData[i]["id_In_Server"] == element['id'].toString()) {
-              //   insertNewTodo = await sqflite.insertData(
-              //       "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Date,Todo_Time) VALUES ('${element['id'].toString()}','${element['todo'].toString()}','${element['completed'].toString()}','','')");
-              //   print(insertNewTodo);
-              // }
-            }
-            if (TheItemIsExcited) {
-              insertNewTodo = await sqflite.insertData(
-                  "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Date,Todo_Time) VALUES ('${element['id'].toString()}','${element['todo'].toString()}','${element['completed'].toString()}','','')");
-              print(insertNewTodo);
+            bool exists = AllSqlData.any(
+                (item) => item['id_In_Server'] == element['id'].toString());
+            if (exists) {
+              continue;
+            } else {
+              await sqflite.insertData(
+                  "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Priority,Todo_Date,Todo_Time) VALUES ('${element['id'].toString()}','${element['todo'].toString()}','${element['completed'].toString()}','','','')");
             }
           } else {
-            insertNewTodo = await sqflite.insertData(
-                "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Date,Todo_Time) VALUES ('${element['id'].toString()}','${element['todo'].toString()}','${element['completed'].toString()}','','')");
-            print(insertNewTodo);
+            await sqflite.insertData(
+                "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Priority,Todo_Date,Todo_Time) VALUES ('${element['id'].toString()}','${element['todo'].toString()}','${element['completed'].toString()}','','','')");
           }
-          print(insertNewTodo);
-          print("insertNewTodo");
+        }
+
+        AllSqlData = await sqflite.readData("SELECT * FROM 'todos'");
+        for (var item in AllSqlData) {
           TodoModle Todo = TodoModle(
-            Todo_Id: element['id'].toString(),
-            Id_In_SqlLite: insertNewTodo.toString(),
-            Todo_Text: element['todo'],
-            Todo_Completed: element['completed'].toString(),
-            Todo_Priority: '',
-            Todo_Date: '',
-            Todo_Time: '',
+            Todo_Id: item['id_In_Server'].toString(),
+            Id_In_SqlLite: item['id'].toString(),
+            Todo_Text: item['todo'],
+            Todo_Completed: item['completed'].toString(),
+            Todo_Priority: item['Todo_Priority'].toString(),
+            Todo_Date: item['Todo_Date'].toString(),
+            Todo_Time: item['Todo_Time'].toString(),
           );
           AllTodos.add(Todo);
           List<Map> response2 = await sqflite.readData("SELECT * FROM 'todos'");
@@ -144,14 +122,12 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
         print(data);
       } else {
         print('Failed to Delete Todo: ${response.statusCode}');
-        //  SnackBarMethod(event.context, "Failed to Delete Todo");
       }
       int response3 = await sqflite
           .deleteData("DELETE FROM 'todos' WHERE id =${event.SqlLiteId}");
       AllTodos.removeWhere((element) {
         return element.Id_In_SqlLite == event.SqlLiteId;
       });
-      //Navigator.of(event.context).pop();
       emit(AllTodosState(AllTodos: AllTodos));
     });
 
@@ -165,20 +141,19 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
         'completed': event.Completed == "Completed" ? true : false,
         'userId': event.UserId,
       });
-
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 201) {
         final data = json.decode(response.body);
         print(data);
+        String isCompleted = event.Completed == "Completed" ? "true" : "false";
         int Response = await sqflite.insertData(
-            "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Date,Todo_Time) VALUES ('${data['id'].toString()}','${event.Todo}','false','${event.Todo_Date}','${event.Todo_Time}')");
-
+            "INSERT INTO  'todos' (id_In_Server, todo,completed,Todo_Priority,Todo_Date,Todo_Time) VALUES ('${data['id'].toString()}','${event.Todo}','$isCompleted','${event.Priority}','${event.Todo_Date}','${event.Todo_Time}')");
         print(Response);
         TodoModle Todo = TodoModle(
           Todo_Id: data['id'].toString(),
           Id_In_SqlLite: Response.toString(),
           Todo_Text: event.Todo,
-          Todo_Completed: "false",
+          Todo_Completed: isCompleted,
           Todo_Priority: event.Priority,
           Todo_Date: event.Todo_Date,
           Todo_Time: event.Todo_Time,
@@ -194,7 +169,6 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
     on<UpdateTodosEvent>((event, emit) async {
       SqfLite sqflite = SqfLite();
       List<TodoModle> AllTodos = event.AllTodos;
-      // print(event.TodosId);
       final url = Uri.parse(ServerEditTodo + event.TodosId);
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
@@ -211,14 +185,17 @@ class TaskManagerBloc extends Bloc<TaskManagerEvent, TaskManagerState> {
         print('Failed to Update Todo : ${response.statusCode}');
       }
       int response2 = await sqflite.updateData(
-          "UPDATE 'todos' SET 'todo'='${event.Todo}','completed'='${event.Completed}','Todo_Date'='${event.Todo_Date}','Todo_Time'='${event.Todo_Time}' WHERE id =${event.SqlLiteId}");
+          "UPDATE 'todos' SET 'todo'='${event.Todo}','completed'='${event.Completed}','Todo_Priority'='${event.Priority}','Todo_Date'='${event.Todo_Date}','Todo_Time'='${event.Todo_Time}' WHERE id =${event.SqlLiteId}");
       for (int i = 0; i < AllTodos.length; i++) {
         if (AllTodos[i].Id_In_SqlLite == event.SqlLiteId) {
-          AllTodos[i].Todo_Completed = event.Completed;
-          AllTodos[i].Todo_Completed = event.Completed;
+          AllTodos[i].Todo_Text = event.Todo;
+          AllTodos[i].Todo_Priority = event.Priority;
+          AllTodos[i].Todo_Date = event.Todo_Date;
+          AllTodos[i].Todo_Time = event.Todo_Time;
           AllTodos[i].Todo_Completed = event.Completed;
         }
       }
+      Navigator.of(event.context).pushReplacementNamed(Home.Route);
       emit(AllTodosState(AllTodos: AllTodos));
     });
   }

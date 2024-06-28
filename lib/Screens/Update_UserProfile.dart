@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -34,6 +35,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
   TextEditingController EmailController = TextEditingController();
   TextEditingController FirstNameController = TextEditingController();
   TextEditingController LastNameController = TextEditingController();
+  GlobalKey<FormState> formstate = new GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -41,7 +43,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
     MyImage = MyData.Image;
     // OldImage = MyData.Image;
     print(MyImage);
-    print("MyImag ----------666----------e");
+
     UsernameController = TextEditingController(text: MyData.Username);
     EmailController = TextEditingController(text: MyData.Email);
     FirstNameController = TextEditingController(text: MyData.FirstName);
@@ -130,55 +132,73 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   ],
                 )),
             SizedBox(height: 15),
-            TextFormFieldMethod(
-                "Username",
-                "Username can't to be larger than 15 letter",
-                "Username can't to be less than 2 letter",
-                Icons.article,
-                "Username",
-                TextInputType.text,
-                15,
-                2,
-                UsernameController),
-            SizedBox(height: 15),
-            TextFormFieldMethod(
-                "Email",
-                "Email can't to be larger than 35 letter",
-                "Email can't to be less than 4 letter",
-                Icons.email,
-                "Email",
-                TextInputType.emailAddress,
-                35,
-                4,
-                EmailController),
-            SizedBox(height: 15),
-            TextFormFieldMethod(
-                "FirstName",
-                "FirstName can't to be larger than 20 digit",
-                "FirstName can't to be less than 2 digit",
-                Icons.phone_iphone,
-                "FirstName",
-                TextInputType.number,
-                20,
-                2,
-                FirstNameController),
-            SizedBox(height: 15),
-            TextFormFieldMethod(
-                "LastName",
-                "LastName can't to be larger than 20 digit",
-                "LastName can't to be less than 2 digit",
-                Icons.phone_iphone,
-                "LastName",
-                TextInputType.number,
-                20,
-                2,
-                LastNameController),
+            Form(
+              key: formstate,
+              child: Column(
+                children: [
+                  TextFormFieldMethod(
+                      "Username",
+                      "Username can't to be larger than 15 letter",
+                      "Username can't to be less than 2 letter",
+                      Icons.article,
+                      "Username",
+                      TextInputType.text,
+                      15,
+                      2,
+                      UsernameController),
+                  SizedBox(height: 15),
+                  TextFormFieldMethod(
+                      "Email",
+                      "Email can't to be larger than 35 letter",
+                      "Email can't to be less than 4 letter",
+                      Icons.email,
+                      "Email",
+                      TextInputType.emailAddress,
+                      35,
+                      4,
+                      EmailController),
+                  SizedBox(height: 15),
+                  TextFormFieldMethod(
+                      "FirstName",
+                      "FirstName can't to be larger than 20 digit",
+                      "FirstName can't to be less than 2 digit",
+                      Icons.phone_iphone,
+                      "FirstName",
+                      TextInputType.number,
+                      20,
+                      2,
+                      FirstNameController),
+                  SizedBox(height: 15),
+                  TextFormFieldMethod(
+                      "LastName",
+                      "LastName can't to be larger than 20 digit",
+                      "LastName can't to be less than 2 digit",
+                      Icons.phone_iphone,
+                      "LastName",
+                      TextInputType.number,
+                      20,
+                      2,
+                      LastNameController),
+                ],
+              ),
+            ),
             SizedBox(height: 10),
             InkWell(
               child: SignInButtonMethod("Update My Information"),
               onTap: () async {
-                //Here We Can Update our information
-                SnackBarMethod(context, "Your Information Has Been Updated");
+                // var formdata = formstate.currentState;
+                // if (formdata!.validate()) {
+                //   formdata.save();
+                //   //Here We Can Update our information
+                //   SnackBarMethod(context, "Your Information Has Been Updated");
+                // }
+                LottieMethod("Loading");
+                var formdata = formstate.currentState;
+                if (formdata!.validate()) {
+                  formdata.save();
+                } else {
+                  print("Not Vaild");
+                }
               },
             ),
             SizedBox(height: 10),
