@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 import 'package:task_manager/Tools/Dropdown_Buttons.dart';
@@ -31,7 +32,7 @@ class _AddTodoState extends State<AddTodo> {
   TextEditingController TodoController = TextEditingController();
   late List<TodoModle> AllTodos;
   late String Priority = PriorityList[0], Completed = TodoStateList[0];
-  DateTime date = DateTime(2024, 1, 1), CurrentDate = DateTime.now();
+  DateTime date = DateTime(2024, 7, 15), CurrentDate = DateTime.now();
   var Date = "Please Set The Date", TheTime = "Please Set The Time";
   bool isDateSet = false, isTimeSet = false;
   int _currentValue = 3;
@@ -184,7 +185,12 @@ class _AddTodoState extends State<AddTodo> {
               setState(() {
                 date = newDate as DateTime;
 
-                Date = "${date.year}/${date.month}/${date.day}";
+                // Date = "${date.year}-${date.month}-${date.day}";
+                Date = DateFormat('yyyy-MM-dd').format(date).toString();
+                Date = DateFormat('yyyy-MM-dd').format(date).toString();
+
+                print(Date);
+                print("date ------------------------");
                 DateTime birthDate = DateTime(date.year, date.month, date.day);
 
                 CurrentDate.compareTo(date) > 0
@@ -379,6 +385,7 @@ class _AddTodoState extends State<AddTodo> {
                                         setState(() {
                                           var NewTime =
                                               "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}";
+                                          print(NewTime);
                                           Navigator.pop(context, NewTime);
                                           isTimeSet = true;
                                         });

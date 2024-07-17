@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager/Screens/Home.dart';
+import 'package:task_manager/Screens/test.dart';
 import 'package:task_manager/Tools/Model.dart';
 import 'package:task_manager/Screens/Sign_In.dart';
 import 'package:task_manager/Screens/Update_UserProfile.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      //home: PaginatedList(),
       home: MyData.Username != "" ? Home(MyData: MyData) : SignIn(),
       routes: {
         Home.Route: (context) => Home(MyData: MyData),

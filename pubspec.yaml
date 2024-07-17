@@ -45,6 +45,7 @@ dependencies:
   time_picker_widget: ^1.0.0+10
   numberpicker: ^2.1.0
   cupertino_icons: ^1.0.6
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
