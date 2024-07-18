@@ -16,7 +16,7 @@ State management patterns, performance optimization, handling local storage, wri
 
 I am very excited to have the opportunity to further contribute to your company. If you need any additional information or if there are other tasks where I can help, please feel free to contact me.
 
-![Uploading Task Manager.jpg…]()
+![Task Manager](https://github.com/user-attachments/assets/818e90b5-e6ff-47c5-ad7a-cfee8270da0d)
 
 
 
