@@ -16,6 +16,10 @@ State management patterns, performance optimization, handling local storage, wri
 
 I am very excited to have the opportunity to further contribute to your company. If you need any additional information or if there are other tasks where I can help, please feel free to contact me.
 
+![image info](images/Illustration of the program Task Manager.png)
+
+
+
 Best Regards,
 
 Abdulaziz Hallak,
