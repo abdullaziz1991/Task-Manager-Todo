@@ -13,13 +13,10 @@ My name is Engineer Abdulaziz Hallak. I work in the field of designing Android a
 
 I am very excited to have the opportunity to further contribute to your company. If you need any additional information or if there are other tasks where I can help, please feel free to contact me.
 
-![CHEESE!](https://github.com/user-attachments/assets/43c63704-04e8-4a4e-b89f-17fb8f2f4943)
-
-
 
 Best Regards,
 
-Abdulaziz Hallak,
-Number : +963946618431,
-Email : abdullaziz.hallak.1991@gmail.com,
+Abdulaziz Hallak,`<br>`
+Number : +963946618431,`<br>`
+Email : abdullaziz.hallak.1991@gmail.com,`<br>`
 https://www.linkedin.com/in/abdulaziz-hallak-857b6b194/
