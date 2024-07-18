@@ -13,6 +13,8 @@ My name is Engineer Abdulaziz Hallak. I work in the field of designing Android a
 
 I am very excited to have the opportunity to further contribute to your company. If you need any additional information or if there are other tasks where I can help, please feel free to contact me.
 
+- [Link to see my CV + my  Certificates + Some of my work ](https://drive.google.com/drive/folders/1sN4_-ObI0rH3BYL9ayJR_pM7jXSmT9_5)
+
 
 Best Regards,
 
