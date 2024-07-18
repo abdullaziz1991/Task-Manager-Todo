@@ -16,7 +16,7 @@ I am very excited to have the opportunity to further contribute to your company.
 
 Best Regards,
 
-Abdulaziz Hallak,(`<br>`)
-Number : +963946618431,(`<br>`)
-Email : abdullaziz.hallak.1991@gmail.com,(`<br>`)
+Abdulaziz Hallak,<br><br>
+Number : +963946618431,<br><br>
+Email : abdullaziz.hallak.1991@gmail.com,<br><br>
 https://www.linkedin.com/in/abdulaziz-hallak-857b6b194/
